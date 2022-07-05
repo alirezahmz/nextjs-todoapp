@@ -1,3 +1,15 @@
+:root {
+  --color-light-gray: rgb(241, 241, 241);
+  --color-medium-gray: rgba(220, 220, 220);
+  --color-dark-gray: rgba(120, 120, 120);
+  --color-brown: rgb(149, 125, 122);
+  --border-gray: rgb(183, 183, 183);
+  --padding-0-24: 0 24px;
+  --padding-10-24: 10px 24px;
+  --font-size-10: 10px;
+  --horizontal-box-shadow: 12px 0 15px -4px rgba(31, 73, 125, 0.1),
+    -12px 0 8px -4px rgba(31, 73, 125, 0.1);
+}
 html,
 body {
   padding: 0;
@@ -13,4 +25,7 @@ a {
 
 * {
   box-sizing: border-box;
+}
+main {
+  padding: 24px;
 }

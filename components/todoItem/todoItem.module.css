@@ -1,0 +1,24 @@
+.item {
+  display: flex;
+  align-items: center;
+  padding: var(--padding-10-24);
+  border-bottom: 1px dashed var(--border-gray);
+}
+/* .item:hover .checkbox {
+  visibility: visible;
+} */
+.item:last-child {
+  border: 0;
+}
+.checkbox {
+  margin-inline-end: 15px;
+  cursor: pointer;
+  /* visibility: hidden; */
+  width: 20px;
+}
+.delIcon {
+  margin-inline-start: auto;
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+}

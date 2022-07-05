@@ -1,0 +1,38 @@
+.footerContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--color-light-gray);
+  width: calc(100% - 8px);
+  margin: 0 auto;
+  padding: 6px;
+  border-radius: 0 0 2px 2px;
+  font-size: var(--font-size-10);
+  color: var(--color-dark-gray);
+}
+.numberOfTodos {
+  font-weight: bold;
+}
+.button {
+  width: 85px;
+  border: none;
+  outline: none;
+  font-size: var(--font-size-10);
+  background-color: var(--color-medium-gray);
+  color: var(--color-dark-gray);
+  padding: 4px;
+  border-radius: 2px;
+  cursor: pointer;
+}
+.filterBar {
+  width: 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.filterBar > span {
+  cursor: pointer;
+}
+.activeTab {
+  font-weight: bold;
+}
