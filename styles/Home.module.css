@@ -44,3 +44,9 @@
   height: 100%;
   overflow: auto;
 }
+.statusMessage {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
