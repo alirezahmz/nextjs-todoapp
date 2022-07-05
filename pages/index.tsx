@@ -1,9 +1,18 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import styles from '../styles/Home.module.css';
-import { AddTodo, Footer } from '../components';
+import { useRouter } from 'next/router';
+import { useGetItems } from '../apis/hooks/useGetItems';
+import { Active, IItem } from '../schema';
+import { AddTodo, TodoItem, Footer } from '../components';
 
 const Home: NextPage = () => {
+  const {
+    query: { filter },
+  } = useRouter();
+  const active: Active | undefined = !!filter;
+
+  const { isLoading, data } = useGetItems(active);
 
   return (
     <>
@@ -20,11 +29,26 @@ const Home: NextPage = () => {
               <div className={styles.header} />
               <AddTodo />
               <div className={styles.list}>
-                todoContainer
+                {isLoading ? (
+                  <div className={styles.statusMessage}>loading...</div>
+                ) : !data?.length ? (
+                  <div className={styles.statusMessage}>
+                    no todo has been added yet!
+                  </div>
+                ) : (
+                  data?.map((item: IItem) => (
+                    <TodoItem
+                      key={item.id}
+                      id={item.id}
+                      title={item.title}
+                      active={item.active}
+                    />
+                  ))
+                )}
               </div>
             </div>
           </div>
-          <Footer />
+          <Footer data={data} />
         </div>
       </main>
     </>
