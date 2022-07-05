@@ -3,12 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "start": "concurrently \"json-server --watch db.json --port 4000 \" \"npm run open-browser && next dev\"",
+    "open-browser": "start http://localhost:3000",
+    "production": "next start",
     "build": "next build",
-    "start": "next start",
     "lint": "next lint"
   },
   "dependencies": {
+    "concurrently": "^7.2.2",
     "next": "12.2.0",
     "react": "18.2.0",
     "react-dom": "18.2.0"
