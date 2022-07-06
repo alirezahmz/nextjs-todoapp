@@ -25,7 +25,8 @@ const Footer: FC<IFooter> = ({ data }) => {
   const {
     query: { filter },
   } = useRouter();
-  const active: Active | undefined = !!filter;
+  const activeFilter: Active | undefined = !!filter;
+
   const queryClient = useQueryClient();
   const { mutate } = useUpdateItem({
     onSuccess: () => {
@@ -58,14 +59,17 @@ const Footer: FC<IFooter> = ({ data }) => {
       <div className={styles.filterBar}>
         {filters.map((item: IItem) => (
           <span
-            className={item.active === active ? styles.activeTab : ''}
+            className={item.active === activeFilter ? styles.activeTab : ''}
             key={item.id}
             onClick={() => handleFilter(item.active as boolean)}>
             {item.title}
           </span>
         ))}
       </div>
-      <button className={styles.button} onClick={handleClearCompleted}>
+      <button
+        className={styles.button}
+        onClick={handleClearCompleted}
+        disabled={activeFilter}>
         Clear completed
       </button>
     </div>
