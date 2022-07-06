@@ -3,25 +3,39 @@ import { useQueryClient } from 'react-query';
 import { useDeleteItem } from '../../apis/hooks/useDeleteItem';
 import { GET_ITEMS } from '../../apis/hooks/useGetItems';
 import { useUpdateItem } from '../../apis/hooks/useUpdateItem';
-import { IItem } from '../../schema';
+import { Active, IItem } from '../../schema';
 import styles from './todoItem.module.css';
 import closeIcon from '../../assets/icons/close.png';
 import Image from 'next/image';
+import { useTodoDispatch } from '../../context/todo.reducer';
+import { deleteItem, updateItem } from '../../context/todo.action';
+import { useRouter } from 'next/router';
 
 const TodoItem: FC<IItem> = ({ id, title, active }) => {
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [editValue, setEditValue] = useState<string | undefined>('');
+  const dispatch = useTodoDispatch();
+  const {
+    query: { filter },
+  } = useRouter();
+  const activeFilter: Active | undefined = !!filter;
 
   const queryClient = useQueryClient();
   const { mutate: mutateUpdateItem } = useUpdateItem({
-    onSuccess: () => {
-      queryClient.invalidateQueries(GET_ITEMS);
+    onSuccess: (data) => {
+      if (data) {
+        dispatch(updateItem(data));
+        queryClient.invalidateQueries(GET_ITEMS);
+      }
     },
   });
 
   const { mutate: mutateDeleteItem } = useDeleteItem({
-    onSuccess: () => {
-      queryClient.invalidateQueries(GET_ITEMS);
+    onSuccess: (_, id) => {
+      if (id) {
+        dispatch(deleteItem(id));
+        queryClient.invalidateQueries(GET_ITEMS);
+      }
     },
   });
 
@@ -70,12 +84,14 @@ const TodoItem: FC<IItem> = ({ id, title, active }) => {
 
   return (
     <div className={styles.item}>
-      <input
-        className={styles.checkbox}
-        type={'checkbox'}
-        checked={active}
-        onChange={handleCheckBox}
-      />
+      {!activeFilter && (
+        <input
+          className={styles.checkbox}
+          type={'checkbox'}
+          checked={active}
+          onChange={handleCheckBox}
+        />
+      )}
       {isEditing ? (
         <input
           className={styles.editInput}
